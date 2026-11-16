@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Level 1 遊戲頁：呈現遊戲舞台、計時器、雞與互動區域。 -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>（遊戲）</title>
+    <link href="./css/level1_style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="game_stage">
+      <div class="bg_layer"></div>
+      <div class="level1_bg opacity_full"></div>
+      <div class="game_container">
+        <img
+          src="./img/Gtimer_4.5s.png"
+          class="timer_intro"
+          alt=""
+          aria-hidden="true"
+        />
+        <div class="Gtimer">
+          <img src="./img/Gtimer_16.17s.gif" alt="遊戲計時器" />
+        </div>
+        <div class="hole" id="hole_1"></div>
+        <div class="hole" id="hole_2"></div>
+        <div class="hole" id="hole_3"></div>
+        <div class="hole" id="hole_4"></div>
+        <div class="hole" id="hole_5"></div>
+        <div class="hole" id="hole_6"></div>
+        <div class="hole" id="hole_7"></div>
+        <div class="hole" id="hole_8"></div>
+        <div class="hole" id="hole_9"></div>
+      </div>
+    </main>
+    <script src="./js/stage_scale.js"></script>
+    <script src="./js/level1_script.js"></script>
+  </body>
+</html>

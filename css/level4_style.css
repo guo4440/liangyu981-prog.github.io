@@ -1,0 +1,484 @@
+/* Level 4：背景、開場說明彈窗與按鈕的樣式。 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 遊戲畫面固定填滿視窗，避免背景或動畫出現捲軸。 */
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game_stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+}
+
+/* 讓彈窗與按鈕一起由畫面上方落下，並在中央淡入、回彈定位。 */
+@keyframes dropDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-1080px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 控制開始按鈕延遲淡入。 */
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes popendBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+  82% {
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes timerIntroShake {
+  0% {
+    opacity: 0;
+    transform: translate(-288px, -288px) scale(0.2) rotate(0);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-288px, -288px) scale(1.8) rotate(-18deg);
+  }
+  24% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(18deg);
+  }
+  36% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(-15deg);
+  }
+  48% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(13deg);
+  }
+  60% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(-9deg);
+  }
+  76% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(5deg);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(-288px, -288px) scale(1.8) rotate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-288px, -288px) scale(1.8) rotate(0);
+  }
+}
+
+@keyframes timerEchoLeft {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) rotate(0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    opacity: 0.35;
+    transform: translateX(-46px) rotate(-12deg);
+  }
+  30%,
+  50%,
+  70% {
+    opacity: 0.2;
+    transform: translateX(46px) rotate(12deg);
+  }
+}
+
+@keyframes timerEchoRight {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) rotate(0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    opacity: 0.2;
+    transform: translateX(46px) rotate(12deg);
+  }
+  30%,
+  50%,
+  70% {
+    opacity: 0.35;
+    transform: translateX(-46px) rotate(-12deg);
+  }
+}
+
+/* 最底層的黃色底色，填滿彈窗背景以外的區域。 */
+.bg_layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #e57b0b;
+  z-index: 0;
+}
+
+/* 背景等比例填滿視窗；靜態開場圖與遊戲 GIF 共用版面設定。 */
+.level4_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 1;
+  background-image: url(../img/0.5_level4_begin.gif);
+  z-index: 2;
+}
+.opacity_full {
+  opacity: 1;
+}
+.opacity_half {
+  opacity: 0.5;
+}
+
+/* 全畫面彈窗容器；與彈窗圖片、按鈕一起播放落下動畫。 */
+.modal4_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 2;
+  animation: dropDownFade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Level 2 說明彈窗圖片；完整置中顯示且不裁切。 */
+.popinfor4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-image: url("../img/introduce_popupwindow_4.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: 1;
+}
+
+/* 開始按鈕覆蓋在彈窗圖片上，定位、大小與 0.2 的彈窗按鈕一致。 */
+.start_button {
+  position: absolute;
+  left: 1187px;
+  bottom: 184px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/start_button_default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 2;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+/* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
+.start_button:active {
+  background-image: url("../img/start_button_active.png");
+}
+
+.Gtimer {
+  position: absolute;
+  top: 54px;
+  right: 1594px;
+  width: 288px;
+  height: 288px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+}
+
+.Gtimer img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 288px;
+  height: 288px;
+}
+
+.Gtimer.visible {
+  opacity: 1;
+  visibility: visible;
+  animation: none;
+}
+
+.timer_intro {
+  position: absolute;
+  top: 540px;
+  left: 960px;
+  width: 576px;
+  height: 576px;
+  transform: translate(-288px, -288px);
+  background-image: url("../img/Gtimer_4.5s.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 20;
+  pointer-events: none;
+  animation: timerIntroShake 1s ease-in-out forwards;
+}
+
+.timer_intro::before,
+.timer_intro::after {
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  content: "";
+}
+
+.timer_intro::before {
+  animation: timerEchoLeft 0.22s linear 4;
+}
+
+.timer_intro::after {
+  animation: timerEchoRight 0.22s linear 4;
+}
+
+.question_image_container {
+  position: absolute;
+  top: 600px; /* 距離畫面頂部的像素 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  text-align: center;
+  z-index: 10; /* 👈 加上這行，確保它在最上層，不會被背景吃掉！ */
+}
+.question_img {
+  width: 850px; /* 👈 想要圖片多寬？直接在這裡用 px 決定！ */
+  height: 350px; /* 👈 想要圖片多高？直接在這裡用 px 決定！ */
+  object-fit: contain; /* 確保圖片不變形 */
+}
+/* 3️⃣ 底部三個並排按鈕容器 */
+.answers_container {
+  position: absolute;
+  top: 810px; /* 如果按鈕跑出畫面，把這個數字改小一點（例如 600px 或 700px）試試 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0px;
+  z-index: 10;
+}
+
+/* 4️⃣ 按鈕通用樣式 */
+.ans_button {
+  width: 400px; /* 按鈕寬度，依你的圖檔比例調整 */
+  height: 220px; /* 按鈕高度 */
+  border: none;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  margin-left: -30px;
+  margin-right: -30px;
+}
+
+.ans_button:disabled {
+  cursor: default;
+}
+
+/* ==========================================
+   🎨 三個按鈕的「預設 / Hover / 點擊」三態圖片設定
+   ========================================== */
+
+/* --- 按鈕 1 --- */
+#btnOption1 {
+  background-image: url(../img/chicken_btn_default.png);
+}
+#btnOption1:hover {
+  background-image: url(../img/chicken_btn_hover.png);
+}
+#btnOption1:active,
+#btnOption1.is_clicked {
+  background-image: url(../img/chicken_btn_active.png);
+}
+
+/* --- 按鈕 2 --- */
+#btnOption2 {
+  background-image: url(../img/kitchen_btn_default.png);
+}
+#btnOption2:hover {
+  background-image: url(../img/kitchen_btn_hover.png);
+}
+#btnOption2:active,
+#btnOption2.is_clicked {
+  background-image: url(../img/kitchen_btn_active.png);
+}
+
+/* --- 按鈕 3 --- */
+#btnOption3 {
+  background-image: url(../img/checkin_btn_default.png);
+}
+#btnOption3:hover {
+  background-image: url(../img/checkin_btn_hover.png);
+}
+#btnOption3:active,
+#btnOption3.is_clicked {
+  background-image: url(../img/checkin_btn_active.png);
+}
+/* --- 第二關：按鈕 1（這題的正確答案） --- */
+#btnOption4 {
+  background-image: url(../img/18_btn_default.png);
+}
+#btnOption4:hover {
+  background-image: url(../img/18_btn_hover.png);
+}
+#btnOption4:active,
+#btnOption4.is_clicked {
+  background-image: url(../img/18_btn_active.png);
+}
+
+/* --- 第二關：按鈕 2 --- */
+#btnOption5 {
+  background-image: url("../img/19_btn_default.png");
+}
+#btnOption5:hover {
+  background-image: url(../img/19_btn_hover.png);
+}
+#btnOption5:active,
+#btnOption5.is_clicked {
+  background-image: url(../img/19_btn_active.png);
+}
+
+/* --- 第二關：按鈕 3 --- */
+#btnOption6 {
+  background-image: url(../img/20_btn_default.png);
+}
+#btnOption6:hover {
+  background-image: url(../img/20_btn_hover.png);
+}
+#btnOption6:active,
+#btnOption6.is_clicked {
+  background-image: url(../img/20_btn_active.png);
+}
+/* --- 第三關：按鈕 1 --- */
+#btnOption7 {
+  background-image: url(../img/fandigan_btn_default.png);
+}
+#btnOption7:hover {
+  background-image: url(../img/fandigan_btn_hover.png);
+}
+#btnOption7:active,
+#btnOption7.is_clicked {
+  background-image: url(../img/fandigans_btn_active.png);
+}
+
+/* --- 第三關：按鈕 2 --- */
+#btnOption8 {
+  background-image: url(../img/beigi_btn_default.png);
+}
+#btnOption8:hover {
+  background-image: url(../img/beigi_btn_hover.png);
+}
+#btnOption8:active,
+#btnOption8.is_clicked {
+  background-image: url(../img/beigi_btn_active.png);
+}
+
+/* --- 第三關：按鈕 3（這題的正確答案） --- */
+#btnOption9 {
+  background-image: url(../img/naigi_btn_default.png);
+}
+#btnOption9:hover {
+  background-image: url(../img/naigi_btn_hover.png);
+}
+#btnOption9:active,
+#btnOption9.is_clicked {
+  background-image: url(../img/naigi_btn_active.png);
+}
+
+.modal5_container {
+  position: absolute;
+  top: 81px;
+  left: 144px;
+  width: 1632px;
+  height: 918px;
+  z-index: 3;
+}
+
+.popwidow5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1632px;
+  height: 918px;
+  background-image: url("../img/end_popupwindow5.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: scale(1);
+  animation: popendBounceIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.modal5_container .next_button {
+  position: absolute;
+  left: 1221px;
+  bottom: 202px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/next-button-default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 3;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+.modal5_container .next_button:active {
+  background-image: url("../img/next-button-active.png");
+}

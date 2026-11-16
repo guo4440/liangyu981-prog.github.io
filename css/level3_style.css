@@ -1,0 +1,467 @@
+/* Level 3：背景、計分區、指針、分數回饋與結尾彈窗的樣式。 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 遊戲畫面固定填滿視窗，避免背景或動畫出現捲軸。 */
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game_stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+}
+
+/* 讓彈窗與按鈕一起由畫面上方落下，並在中央淡入、回彈定位。 */
+@keyframes dropDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-1080px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 控制開始按鈕延遲淡入。 */
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes popendBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+  82% {
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 最底層的黃色底色，填滿彈窗背景以外的區域。 */
+.bg_layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #e57b0b;
+  z-index: 0;
+}
+
+/* 背景等比例填滿視窗；靜態開場圖與遊戲 GIF 共用版面設定。 */
+.level3_bg,
+.level3_bg_animated {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1920px 1080px;
+  z-index: 1;
+  background-image: url("../img/friedegg_animation.gif");
+}
+
+.level3_bg {
+  background-color: #e57b0b;
+  opacity: 1;
+  background-image: url("../img/friedegg_animation.gif");
+  z-index: 2;
+}
+.opacity_full {
+  opacity: 1;
+}
+.opacity_half {
+  opacity: 0.5;
+}
+
+/* 全畫面彈窗容器；與彈窗圖片、按鈕一起播放落下動畫。 */
+.modal3_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 2;
+  animation: dropDownFade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Level 2 說明彈窗圖片；完整置中顯示且不裁切。 */
+.popinfor3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-image: url("../img/introduce_popupwindow_3.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: 1;
+}
+
+/* 開始按鈕覆蓋在彈窗圖片上，定位、大小與 0.2 的彈窗按鈕一致。 */
+.start_button {
+  position: absolute;
+  left: 1187px;
+  bottom: 184px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/start_button_default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 2;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+/* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
+.start_button:active {
+  background-image: url("../img/start_button_active.png");
+}
+
+.modal4_container {
+  position: absolute;
+  top: 81px;
+  left: 144px;
+  width: 1632px;
+  height: 918px;
+  z-index: 2;
+}
+
+.popwidow4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1632px;
+  height: 918px;
+  background-image: url("../img/end_popupwindowegg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: scale(1);
+  animation: popendBounceIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.modal4_container .next_button {
+  position: absolute;
+  left: 1221px;
+  bottom: 202px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/next-button-default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 2;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+.modal4_container .next_button:active {
+  background-image: url("../img/next-button-active.png");
+}
+
+.stop_button {
+  position: absolute;
+  left: 860px;
+  bottom: 45px;
+  width: 220px;
+  height: 120px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/stop_button_default%20.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 20;
+  transition:
+    transform 100ms ease,
+    filter 100ms ease;
+}
+
+.stop_button:active {
+  background-image: url("../img/stop_button_active.png");
+  transform: translateY(4px) scale(0.96);
+  filter: brightness(0.9);
+}
+
+.stop_button:disabled {
+  cursor: default;
+}
+.score_bar_area {
+  position: absolute;
+  top: 150px;
+  left: 300px;
+  width: 1100px;
+  height: 74px;
+  z-index: 3;
+}
+
+.score_bar {
+  background-image: url(../img/friedEgg_line.gif);
+  position: absolute;
+  top: -90px;
+  left: -120px;
+  width: 1800px;
+  height: 1012.5px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left top;
+  overflow: hidden;
+  display: block;
+
+  /* 對應 friedEgg_line.gif 原圖 y=71、305、375、607、1005 的色帶分界。 */
+  --score-zone-start: 66.56px;
+  --score-zone-1-height: 219.38px;
+  --score-zone-2-height: 65.62px;
+  --score-zone-3-height: 217.5px;
+  --score-zone-4-height: 373.13px;
+}
+
+.score_zone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  pointer-events: none;
+}
+
+.score_zone_1 {
+  top: var(--score-zone-start);
+  height: var(--score-zone-1-height);
+}
+
+.score_zone_2 {
+  top: calc(var(--score-zone-start) + var(--score-zone-1-height));
+  height: var(--score-zone-2-height);
+}
+
+.score_zone_3 {
+  top: calc(
+    var(--score-zone-start) + var(--score-zone-1-height) +
+      var(--score-zone-2-height)
+  );
+  height: var(--score-zone-3-height);
+}
+
+.score_zone_4 {
+  top: calc(
+    var(--score-zone-start) + var(--score-zone-1-height) +
+      var(--score-zone-2-height) + var(--score-zone-3-height)
+  );
+  height: var(--score-zone-4-height);
+}
+
+.score_pointer {
+  position: absolute;
+  top: -74px;
+  left: -120px;
+  width: 260px;
+  height: 220px;
+  transform: rotate(90deg);
+  object-fit: contain;
+  animation: scorePointerSweep 2s linear infinite alternate;
+}
+
+.score_pointer.is_stopped {
+  animation-play-state: paused;
+}
+
+/* [已修正] 修正拼寫錯誤與上下移動的屬性對應 */
+@keyframes scorePointerSweep {
+  0% {
+    top: -133.44px;
+  }
+  100% {
+    top: 742.19px;
+  }
+}
+
+.feedback_gif_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.feedback_visible .level3_bg_animated {
+  display: none;
+}
+
+.feedback_gif_container.is_visible {
+  display: flex;
+}
+
+.feedback_gif_container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 1920px;
+  height: 1080px;
+  object-fit: contain;
+}
+
+.feedback_gif_container img.is_active {
+  display: block;
+}
+
+.feedback_score {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.visually_hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+讓畫面全螢幕 */ html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 背景容器：預設第一段的背景顏色（可自行修改顏色） */
+.ending_bg_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #e57b0b;
+  background-image: url(../img/friedegg_animation.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* 透明 GIF 樣式 */
+.transparent_gif {
+  width: 1920px;
+  height: 1080px;
+  object-fit: contain; /* 確保透明 GIF 不變形 */
+}
+/* Position feedback overlay images themselves, overriding the full-stage GIF defaults above. */
+.feedback_gif_container img.fb_top_left {
+  position: absolute;
+  top: 80px;
+  left: 20%;
+
+  width: 60vw;
+  height: auto;
+  object-fit: contain;
+  z-index: 11;
+  max-width: 700px;
+  max-height: auto;
+}
+#feedbackGif0Top {
+  width: 450px;
+  height: auto;
+  top: 80px;
+  left: 380px;
+}
+#feedbackGif10Top {
+  width: 550px;
+  height: auto;
+  top: 60px;
+  left: 350px;
+  transform: rotate(-20deg);
+}
+.feedback_gif_container img.fb_bottom_right {
+  position: absolute;
+  top: auto;
+  bottom: 80px;
+  left: auto;
+  right: 80px;
+  width: 400px;
+  height: auto;
+  object-fit: contain;
+  z-index: 11;
+}
+#feedbackGif15Top {
+  width: 1500px;
+  height: auto;
+  top: 60px;
+  left: 300px;
+  transform: rotate(-5deg);
+}
+#feedbackGif15Bottom {
+  width: 320px;
+  height: auto;
+  top: 700px;
+  left: 1400px;
+  transform: rotate(5deg);
+}
+#feedbackGif5Top {
+  width: 600px;
+  height: auto;
+  top: 60px;
+  left: 300px;
+  transform: rotate(-5deg);
+}
+#feedbackGif5Bottom {
+  width: 350px;
+  height: auto;
+  top: 700px;
+  left: 1400px;
+  transform: rotate(10deg);
+}

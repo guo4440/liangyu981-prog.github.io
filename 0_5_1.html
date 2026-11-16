@@ -1,0 +1,62 @@
+<!doctype html>
+<!-- Level 4 遊戲頁：呈現 Level 4 背景並載入舞台縮放與關卡腳本。 -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>（遊戲1）</title>
+    <link href="./css/level4_style.css" rel="stylesheet" />
+    <link rel="preload" as="image" href="./img/Gtimer_4.35s.gif" />
+  </head>
+  <body>
+    <main class="game_stage">
+      <div class="bg_layer"></div>
+      <div class="level4_bg opacity_full"></div>
+      <img
+        src="./img/Gtimer_4.5s.png"
+        class="timer_intro"
+        alt=""
+        aria-hidden="true"
+      />
+      <div class="Gtimer">
+        <img data-src="./img/Gtimer_4.35s.gif" alt="遊戲計時器" />
+      </div>
+      <div class="question_image_container">
+        <img
+          src="./img/level4_Ｑ_1.png"
+          alt="第一大題題目"
+          class="question_img"
+        />
+      </div>
+
+      <!-- 📌 2. 底部三個並排的選項按鈕區域 -->
+      <div class="answers_container">
+        <!-- 選項 1：設定為錯誤答案 (加 0 分) -->
+        <button
+          class="ans_button"
+          id="btnOption1"
+          data-answer="correct"
+          type="button"
+        ></button>
+
+        <!-- 選項 2：設定為正確答案 (加 6 分，你可以隨便換到別的按鈕) -->
+        <button
+          class="ans_button"
+          id="btnOption2"
+          data-answer="wrong"
+          type="button"
+        ></button>
+
+        <!-- 選項 3：設定為錯誤答案 (加 0 分) -->
+        <button
+          class="ans_button"
+          id="btnOption3"
+          data-answer="wrong"
+          type="button"
+        ></button>
+      </div>
+    </main>
+    <script src="./js/stage_scale.js"></script>
+    <script src="./js/level4_script.js"></script>
+  </body>
+</html>

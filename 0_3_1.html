@@ -1,0 +1,93 @@
+<!doctype html>
+<!-- Level 2 遊戲頁：呈現計分條、指針、停止按鈕與回饋動畫。 -->
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>（遊戲）</title>
+    <link href="./css/level2_style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="game_stage">
+      <div class="bg_layer"></div>
+      <div
+        class="level2_bg_animated"
+        id="level2Background"
+        aria-hidden="true"
+      ></div>
+      <div class="score_bar_area">
+        <div class="score_bar" id="scoreBar" aria-label="分數區域">
+          <img class="score_bar_image" alt="" aria-hidden="true" />
+          <div
+            class="score_zone score_zone_1"
+            data-score="5"
+            aria-label="5 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_2"
+            data-score="10"
+            aria-label="10 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_3"
+            data-score="15"
+            aria-label="15 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_4"
+            data-score="10"
+            aria-label="10 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_5"
+            data-score="5"
+            aria-label="5 分區域"
+          ></div>
+        </div>
+        <img
+          class="score_pointer"
+          id="scorePointer"
+          src="./img/trangle.png"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
+      <button
+        class="stop_button"
+        id="stopBtn"
+        type="button"
+        aria-label="停止並結算"
+      >
+        <span class="visually_hidden">停止</span>
+      </button>
+      <aside
+        class="feedback_gif_container"
+        id="feedbackContainer"
+        aria-live="polite"
+        aria-hidden="true"
+      >
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif5"
+          src="./img/feedback_mad.gif"
+          alt="5"
+        />
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif10"
+          src="./img/feedback_sad.gif"
+          alt="10"
+        />
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif15"
+          src="./img/feedback_good.gif"
+          alt="15"
+        />
+        <span class="feedback_score" id="feedbackScore"></span>
+      </aside>
+    </main>
+    <script src="./js/stage_scale.js"></script>
+    <script src="./js/level2_script.js"></script>
+  </body>
+</html>

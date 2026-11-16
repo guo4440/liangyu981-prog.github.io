@@ -1,0 +1,333 @@
+/* Level 2：背景、計分條、指針、分數回饋與結尾畫面的樣式。 */
+/* 統一所有元素的尺寸計算方式，並移除瀏覽器預設留白。 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 遊戲畫面固定填滿視窗，避免背景或動畫出現捲軸。 */
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game_stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+}
+
+/* 讓彈窗與按鈕一起由畫面上方落下，並在中央淡入、回彈定位。 */
+@keyframes dropDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-1080px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 控制開始按鈕延遲淡入。 */
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 最底層的黃色底色，填滿彈窗背景以外的區域。 */
+.bg_layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #ffc700;
+  z-index: 0;
+}
+
+/* 背景等比例填滿視窗；靜態開場圖與遊戲 GIF 共用版面設定。 */
+.level2_bg,
+.level2_bg_animated {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 1;
+}
+
+.level2_bg {
+  background-image: url("../img/catchEgg_head.png");
+  opacity: 0.5;
+}
+
+.level2_bg_animated {
+  background-image: url("../img/catchEgg.gif");
+}
+
+/* 全畫面彈窗容器；與彈窗圖片、按鈕一起播放落下動畫。 */
+.modal2_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 2;
+  animation: dropDownFade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Level 2 說明彈窗圖片；完整置中顯示且不裁切。 */
+.popinfor2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-image: url("../img/introduce_popupwindow_2.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: 1;
+}
+
+/* 開始按鈕覆蓋在彈窗圖片上，定位、大小與 0.2 的彈窗按鈕一致。 */
+.start_button {
+  position: absolute;
+  left: 1187px;
+  bottom: 184px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/start_button_default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 2;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+/* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
+.start_button:active {
+  background-image: url("../img/start_button_active.png");
+}
+.stop_button {
+  position: absolute;
+  left: 860px;
+  bottom: 45px;
+  width: 220px;
+  height: 120px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/stop_button_default%20.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 3;
+  transition:
+    transform 100ms ease,
+    filter 100ms ease;
+}
+
+.stop_button:active {
+  background-image: url("../img/stop_button_active.png");
+  transform: translateY(4px) scale(0.96);
+  filter: brightness(0.9);
+}
+
+.stop_button:disabled {
+  cursor: default;
+}
+
+.score_bar_area {
+  position: absolute;
+  top: 72px;
+  left: 410px;
+  width: 1100px;
+  height: 74px;
+  z-index: 3;
+}
+
+.score_bar {
+  background-image: url(../img/catchEgg_line.gif);
+  position: absolute;
+  top: -40px;
+  left: -53.5px;
+  width: 1207px;
+  height: 600px;
+  background-repeat: no-repeat;
+  background-size: 1207px 679px;
+  background-position: left top;
+  overflow: hidden;
+  display: flex;
+  padding-left: 50px;
+  padding-right: 44px;
+
+  /* 對齊原圖色帶；區塊總寬 1113px，左右保留透明邊界。 */
+  --score-zone-1-width: 367px;
+  --score-zone-2-width: 149px;
+  --score-zone-3-width: 76px;
+  --score-zone-4-width: 153px;
+  --score-zone-5-width: 368px;
+}
+
+.score_bar_image {
+  position: absolute;
+  top: -38px;
+  left: -32.5px;
+  width: 1000px;
+  height: 563px;
+  max-width: none;
+  pointer-events: none;
+}
+
+.score_zone {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 0;
+  height: 600px;
+  pointer-events: none;
+}
+
+.score_zone_1 {
+  width: var(--score-zone-1-width);
+}
+
+.score_zone_2 {
+  width: var(--score-zone-2-width);
+}
+
+.score_zone_3 {
+  width: var(--score-zone-3-width);
+}
+
+.score_zone_4 {
+  width: var(--score-zone-4-width);
+}
+
+.score_zone_5 {
+  width: var(--score-zone-5-width);
+}
+
+.score_pointer {
+  position: absolute;
+  top: -89px;
+  left: -120px;
+  width: 240px;
+  height: 200px;
+  object-fit: contain;
+  animation: scorePointerSweep 1.5s linear infinite alternate;
+}
+
+.score_pointer.is_stopped {
+  background-image: url(../img/trangle.png);
+  animation-play-state: paused;
+}
+
+@keyframes scorePointerSweep {
+  from {
+    left: -123px;
+  }
+  to {
+    left: 989px;
+  }
+}
+
+.feedback_gif_container {
+  position: absolute;
+  top: 0px;
+  right: 24px;
+  display: none;
+  width: 700px;
+  height: 700px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.feedback_gif_container.is_visible {
+  display: flex;
+}
+
+.feedback_gif_container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 700px;
+  height: 700px;
+  object-fit: contain;
+}
+
+.feedback_gif_container img.is_active {
+  display: block;
+}
+
+.visually_hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* 讓畫面全螢幕 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 背景容器：預設第一段的背景顏色（可自行修改顏色） */
+.ending_bg_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #ffc700;
+  background-image: url(../img/catchEgg.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* 透明 GIF 樣式 */
+.transparent_gif {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  object-fit: contain; /* 確保透明 GIF 不變形 */
+}

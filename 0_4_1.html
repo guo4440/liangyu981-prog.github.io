@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- Level 3 遊戲頁：呈現計分區、指針、停止按鈕與分數回饋。 -->
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>（遊戲）</title>
+    <link href="./css/level3_style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="game_stage">
+      <div class="bg_layer"></div>
+      <div
+        class="level3_bg_animated"
+        id="level3Background"
+        aria-hidden="true"
+      ></div>
+      <div class="score_bar_area">
+        <div class="score_bar" id="scoreBar" aria-label="分數區域">
+          <div
+            class="score_zone score_zone_1"
+            data-score="0"
+            aria-label="0 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_2"
+            data-score="15"
+            aria-label="15 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_3"
+            data-score="5"
+            aria-label="5 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_4"
+            data-score="10"
+            aria-label="10 分區域"
+          ></div>
+        </div>
+        <img
+          class="score_pointer"
+          id="scorePointer"
+          src="./img/trangle.png"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
+      <button
+        class="stop_button"
+        id="stopBtn"
+        type="button"
+        aria-label="停止並結算"
+      >
+        <span class="visually_hidden">停止</span>
+      </button>
+      <aside
+        class="feedback_gif_container"
+        id="feedbackContainer"
+        aria-live="polite"
+        aria-hidden="true"
+      >
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif0"
+          src="./img/0point_egg.gif"
+          alt="0"
+        />
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif15"
+          src="./img/15point_egg.gif"
+          alt="15"
+        />
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif5"
+          src="./img/5point_egg.gif"
+          alt="5"
+        />
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif10"
+          src="./img/10point_egg.gif"
+          alt="10"
+        />
+        <!-- 配對陪襯 GIF：由計分腳本與對應主 GIF 同時顯示。 -->
+        <img
+          class="feedback_gif_image fb_top_left"
+          id="feedbackGif0Top"
+          src="./img/feedback_overlay_0.GIF"
+          alt=""
+          aria-hidden="true"
+        />
+
+        <img
+          class="feedback_gif_image fb_top_left"
+          id="feedbackGif15Top"
+          src="./img/feedback_overlay_15_1.GIF"
+          alt="15"
+          aria-hidden="true"
+        />
+        <img
+          class="fb_bottom_right"
+          id="feedbackGif15Bottom"
+          src="./img/feedback_overlay_15_2.gif"
+          alt="15"
+          aria-hidden="true"
+        />
+        <img
+          class="feedback_gif_image fb_top_left"
+          id="feedbackGif10Top"
+          src="./img/feedback_overlay_10.gif"
+          alt="10"
+          aria-hidden="true"
+        />
+        <img
+          class="feedback_gif_image fb_top_left"
+          id="feedbackGif5Top"
+          src="./img/feedback_overlay_5_1.gif"
+          alt="5"
+          aria-hidden="true"
+        />
+        <img
+          class="fb_bottom_right"
+          id="feedbackGif5Bottom"
+          src="./img/feedback_overlay_5_2.gif"
+          alt=""
+          aria-hidden="true"
+        />
+      </aside>
+    </main>
+    <script src="./js/stage_scale.js"></script>
+    <script src="./js/level3_script.js"></script>
+  </body>
+</html>

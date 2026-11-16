@@ -1,0 +1,457 @@
+/* Level 1：開場、遊戲互動、計時器與結尾畫面的樣式。 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game_stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+}
+
+/* 定義從上掉落與淡入的動畫影格 */
+@keyframes dropDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-1080px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 0.2.2*/
+
+@keyframes popendBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+  82% {
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes timerIntroShake {
+  0% {
+    opacity: 0;
+    transform: translate(-288px, -288px) scale(0.2) rotate(0);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-288px, -288px) scale(1.8) rotate(-18deg);
+  }
+  24% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(18deg);
+  }
+  36% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(-15deg);
+  }
+  48% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(13deg);
+  }
+  60% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(-9deg);
+  }
+  76% {
+    transform: translate(-288px, -288px) scale(1.8) rotate(5deg);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(-288px, -288px) scale(1.8) rotate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-288px, -288px) scale(1.8) rotate(0);
+  }
+}
+
+@keyframes timerEchoLeft {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) rotate(0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    opacity: 0.35;
+    transform: translateX(-46px) rotate(-12deg);
+  }
+  30%,
+  50%,
+  70% {
+    opacity: 0.2;
+    transform: translateX(46px) rotate(12deg);
+  }
+}
+
+@keyframes timerEchoRight {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) rotate(0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    opacity: 0.2;
+    transform: translateX(46px) rotate(12deg);
+  }
+  30%,
+  50%,
+  70% {
+    opacity: 0.35;
+    transform: translateX(-46px) rotate(-12deg);
+  }
+}
+
+/* 最底層：單色底色層 */
+.bg_layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #ffca00;
+  z-index: 0;
+}
+.level1_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/0.2_level1_begin.gif);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  z-index: 1;
+}
+.opacity_full {
+  opacity: 1;
+}
+.opacity_half {
+  opacity: 0.5;
+}
+
+/* 彈跳視窗與按鈕的群組容器（套用動畫，讓它們一起掉落） */
+.modal_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 2;
+
+  /* 套用動畫：讓彈跳視窗與按鈕一起從上方掉落 */
+  animation: dropDownFade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.popinfor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-image: url("../img/introduce_popupwindow_1.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: 1;
+}
+
+/* 圖片按鈕程式 */
+.start_button {
+  position: absolute;
+  /* 按鈕在彈跳視窗內的位置 */
+  left: 1187px;
+  bottom: 184px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+
+  background-image: url("../img/start_button_default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 2;
+  /* 確保按鈕在彈跳視窗圖片之上 */
+  opacity: 0;
+
+  /* 套用按鈕淡入動畫：持續 0.8 秒、延遲 2 秒後才開始、forwards 讓動畫結束後保持不透明 */
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+.start_button:active {
+  background-image: url("../img/start_button_active.png");
+}
+
+/* 結束畫面與圖片按鈕 */
+.end_container {
+  position: absolute;
+  top: 81px;
+  left: 144px;
+  width: 1632px;
+  height: 918px;
+  z-index: 2;
+}
+
+.popend {
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/end_popupwindow.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: scale(1);
+  animation: popendBounceIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.next_button {
+  position: absolute;
+  left: 1258px;
+  bottom: 184px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url(../img/next-button-default.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 2;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+.next_button:active {
+  background-image: url(../img/next-button-active.png);
+}
+
+/*0.2.1*/
+.game_container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 2;
+}
+.Gtimer {
+  position: absolute;
+  top: 54px;
+  right: 1594px;
+  width: 288px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+}
+.Gtimer img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 288px;
+  height: 288px;
+}
+.Gtimer.visible {
+  opacity: 1;
+  visibility: visible;
+  animation: popendBounceIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.score_display {
+  position: absolute;
+  top: 54px;
+  right: 77px;
+  z-index: 10;
+  padding: 0.5em 0.8em;
+  border-radius: 0.4em;
+  background: #fff;
+  color: #222;
+  font: 700 28px / 1.2 sans-serif;
+}
+/* .Timer {
+  position: absolute;
+  top: 15%;
+  right: 80%;
+  width: 15%;
+  height: auto;
+  opacity: 0;
+  z-index: 10;
+} */
+.game_container.started .Timer {
+  opacity: 1;
+}
+.timer_intro {
+  position: absolute;
+  top: 540px;
+  left: 960px;
+  width: 576px;
+  height: 576px;
+  transform: translate(-288px, -288px);
+  background-image: url("../img/Gtimer_4.5s.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 20;
+  pointer-events: none;
+  animation: timerIntroShake 1s ease-in-out forwards;
+}
+.timer_intro::before,
+.timer_intro::after {
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  content: "";
+}
+.timer_intro::before {
+  animation: timerEchoLeft 0.22s linear 4;
+}
+.timer_intro::after {
+  animation: timerEchoRight 0.22s linear 4;
+}
+/* 九宮格以背景圖比例定位，會隨背景一起縮放 */
+.hole {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 第一排 (上) */
+#hole_1 {
+  top: 170px;
+  left: 470px;
+}
+#hole_2 {
+  top: 160px;
+  left: 850px;
+}
+#hole_3 {
+  top: 160px;
+  left: 1250px;
+}
+
+/* 第二排 (中) */
+#hole_4 {
+  top: 360px;
+  left: 470px;
+}
+#hole_5 {
+  top: 360px;
+  left: 855px;
+}
+#hole_6 {
+  top: 365px;
+  left: 1250px;
+}
+
+/* 第三排 (下) */
+#hole_7 {
+  top: 575px;
+  left: 470px;
+}
+#hole_8 {
+  top: 575px;
+  left: 855px;
+}
+#hole_9 {
+  top: 575px;
+  left: 1245px;
+}
+
+/* 雞的共通樣式 */
+.chicken {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 250px;
+  height: 250px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+/* 第一種雞：預設與被抓狀態 */
+.chicken_type_1 {
+  width: 220px !important;
+  height: 220px !important;
+  background-image: url(../img/normal_chicken_1.png);
+}
+.chicken_type_1.clicked {
+  width: 220px !important;
+  height: 220px !important;
+  background-image: url(../img/normal_chicken_2.png);
+}
+
+/* 第二種雞：預設與被抓狀態 */
+.chicken_type_2 {
+  top: 0;
+  left: 0;
+  width: 230px !important;
+  height: 230px !important;
+  background-image: url(../img/gold_chicken_1.png);
+}
+.chicken_type_2.clicked {
+  width: 230px !important;
+  height: 230px !important;
+  background-image: url(../img/gold_chicken_2.png);
+}
+
+/* 第三種雞：預設與被抓狀態 */
+.chicken_type_3 {
+  width: 220px !important;
+  height: 220px !important;
+  background-image: url(../img/bad_chicken_1.png);
+}
+.chicken_type_3.clicked {
+  width: 220px !important;
+  height: 220px !important;
+  background-image: url(../img/bad_chicken_2.png);
+}

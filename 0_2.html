@@ -1,0 +1,34 @@
+<!doctype html>
+<!-- Level 1 開場頁：呈現關卡背景、說明彈窗與開始按鈕。 -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>（開頭）</title>
+    <link href="./css/level1_style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="game_stage">
+      <!-- 最底層：黃色底色層 -->
+      <div class="bg_layer"></div>
+
+      <!-- 第二層：Level 1 背景圖片（固定不動，不參與動畫） -->
+      <div class="level1_bg opacity_half"></div>
+
+      <!-- 最上層：彈跳視窗與按鈕的群組容器（套用掉落動畫，讓它們一起移動） -->
+      <div class="modal_container">
+        <!-- 彈跳視窗圖片 -->
+        <div class="popinfor"></div>
+
+        <button
+          class="start_button"
+          id="startBtn"
+          type="button"
+          aria-label="start_button"
+        ></button>
+      </div>
+    </main>
+    <script src="./js/stage_scale.js"></script>
+    <script src="./js/level1_script.js"></script>
+  </body>
+</html>
