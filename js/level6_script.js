@@ -1,116 +1,187 @@
-// Level 5 的開始按鈕、計分判定與分數回饋行為。
 document.addEventListener("DOMContentLoaded", () => {
-  const start_button = document.getElementById("startBtn");
-  const next_button = document.getElementById("nextBtn");
+  const startButton = document.getElementById("startBtn");
+  const nextButton = document.getElementById("nextBtn");
 
-  if (start_button) {
-    start_button.addEventListener("click", (event) => {
+  if (startButton) {
+    startButton.addEventListener("click", (event) => {
       event.preventDefault();
       localStorage.setItem("level1ScoreBase", "0");
       localStorage.setItem("totalScore", "0");
-      setTimeout(() => {
+      window.setTimeout(() => {
         window.location.href = "0_7_1.html";
       }, 200);
     });
   }
 
-  if (next_button) {
-    next_button.addEventListener("click", (event) => {
+  if (nextButton) {
+    nextButton.addEventListener("click", (event) => {
       event.preventDefault();
-      setTimeout(() => {
+      window.setTimeout(() => {
         window.location.href = "0_8.html";
       }, 200);
     });
   }
 
-  feedback_images_by_id.forEach((image) => {
-    image?.classList.remove("is_active");
-  });
-  active_feedback.forEach((id) => {
-    feedback_images_by_id.get(id)?.classList.add("is_active");
-  });
-  document.body.classList.add("feedback_visible");
-  feedback_container.classList.add("is_visible");
-  feedback_container.setAttribute("aria-hidden", "false");
+  const stage = document.querySelector(".game_stage");
+  if (stage?.classList.contains("level6_transition")) {
+    const getDurationMs = (property) => {
+      const value = window.getComputedStyle(stage).getPropertyValue(property).trim();
+      const duration = Number.parseFloat(value) || 0;
+      return value.endsWith("ms") ? duration : duration * 1000;
+    };
+    const flash = stage.querySelector(".transition_flash");
+    window.setTimeout(() => {
+      stage.querySelector(".transition_fini").classList.add("is_visible");
+    }, getDurationMs("--level6-end-hold") + getDurationMs("--level6-flash-duration") / 2);
+    flash.addEventListener("animationend", (event) => {
+      if (event.animationName !== "transitionWhiteFlash") return;
+      flash.hidden = true;
+      window.setTimeout(() => {
+        stage.querySelector(".transition_decorations").classList.add("is_visible");
+      }, getDurationMs("--level6-decorations-delay"));
+      window.setTimeout(() => {
+        window.location.href = "0_7_3.html";
+      }, getDurationMs("--level6-fini-hold"));
+    }, { once: true });
+    return;
+  }
+  if (!stage?.querySelector(".item_selector")) return;
 
-  setTimeout(() => {
-    feedback_container.classList.remove("is_visible");
-    feedback_container.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("feedback_visible");
-    pointer.classList.remove("is_stopped");
-    stop_button.disabled = false;
-    is_stopped = false;
-  }, 2000);
-  setTimeout(() => {
-    window.location.href = "0_7_2.html";
-  }, 2000);
-});
+  const itemSettings = {
+    g: {
+      icon: { left: 1485, top: 99, width: 194, height: 211 },
+      artwork: { left: 821, top: 309, width: 207, height: 376 },
+    },
+    cake: {
+      icon: { left: 1474, top: 445, width: 202, height: 138 },
+      artwork: { left: 361, top: 178, width: 991, height: 689 },
+    },
+    egg: {
+      icon: { left: 1472, top: 766, width: 195, height: 148 },
+      artwork: { left: 523, top: 255, width: 682, height: 504 },
+    },
+  };
 
-document.addEventListener("DOMContentLoaded", () => {
-  const dragItems = document.querySelectorAll(".drag_item");
-  const dropZones = document.querySelectorAll(".drop_zone");
+  let activeDrag = null;
+  let completedCount = 0;
 
-  let draggedData = null;
+  const getAssemblyTransform = () => {
+    const styles = window.getComputedStyle(stage);
+    return {
+      x: Number.parseFloat(styles.getPropertyValue("--assembly-x")) || 0,
+      y: Number.parseFloat(styles.getPropertyValue("--assembly-y")) || 0,
+      scale: Number.parseFloat(styles.getPropertyValue("--assembly-scale")) || 1,
+    };
+  };
 
-  // 1. 開始拖曳時記錄是哪一個食材
-  dragItems.forEach((item) => {
-    item.addEventListener("dragstart", (e) => {
-      draggedData = item.getAttribute("data-item");
-      e.dataTransfer.setData("text/plain", draggedData);
+  const getStagePoint = (event) => {
+    const bounds = stage.getBoundingClientRect();
+    return {
+      x: ((event.clientX - bounds.left) / bounds.width) * 1920,
+      y: ((event.clientY - bounds.top) / bounds.height) * 1080,
+    };
+  };
+
+  const movePreview = (point) => {
+    if (!activeDrag) return;
+    activeDrag.preview.style.left = `${point.x - activeDrag.grabX}px`;
+    activeDrag.preview.style.top = `${point.y - activeDrag.grabY}px`;
+  };
+
+  const cancelDrag = () => {
+    if (!activeDrag) return;
+    activeDrag.preview.remove();
+    activeDrag.menuImage.hidden = false;
+    activeDrag = null;
+  };
+
+  stage.querySelectorAll(".item_selector").forEach((selector) => {
+    selector.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0 || selector.disabled || activeDrag) return;
+      event.preventDefault();
+
+      const item = selector.dataset.item;
+      const settings = itemSettings[item];
+      const assembly = getAssemblyTransform();
+      const point = getStagePoint(event);
+      const grabRatioX = Math.min(
+        1,
+        Math.max(0, (point.x - settings.icon.left) / settings.icon.width),
+      );
+      const grabRatioY = Math.min(
+        1,
+        Math.max(0, (point.y - settings.icon.top) / settings.icon.height),
+      );
+      const preview = document.createElement("div");
+      preview.className = "drag_preview";
+      preview.setAttribute("aria-hidden", "true");
+      preview.style.width = `${settings.artwork.width * assembly.scale}px`;
+      preview.style.height = `${settings.artwork.height * assembly.scale}px`;
+      preview.style.backgroundImage = `url("./img/big_${item}.PNG")`;
+      preview.style.backgroundSize = `${1920 * assembly.scale}px ${1080 * assembly.scale}px`;
+      preview.style.backgroundPosition = `-${settings.artwork.left * assembly.scale}px -${settings.artwork.top * assembly.scale}px`;
+
+      const menuImage = stage.querySelector(`[data-menu-item="${item}"]`);
+      menuImage.hidden = true;
+      stage.appendChild(preview);
+      activeDrag = {
+        item,
+        selector,
+        menuImage,
+        preview,
+        artwork: settings.artwork,
+        assembly,
+        grabX: grabRatioX * settings.artwork.width * assembly.scale,
+        grabY: grabRatioY * settings.artwork.height * assembly.scale,
+      };
+      movePreview(point);
     });
   });
 
-  // 2. 允許放置區接收拖曳物
-  dropZones.forEach((zone) => {
-    zone.addEventListener("dragover", (e) => {
-      e.preventDefault(); // 必須阻擋預設行為才能 drop
-    });
-
-    // 3. 放開滑鼠瞬間判定
-    zone.addEventListener("drop", (e) => {
-      e.preventDefault();
-      const targetType = zone.getAttribute("data-target");
-
-      // 判斷：是否對應正確的虛線區？
-      if (draggedData === targetType) {
-        // --- 答對了！ ---
-        console.log("放對位置！");
-
-        // A. 隱藏該區的虛線圖
-        const dashImg = zone.querySelector(".dash_img");
-        if (dashImg) dashImg.style.display = "none";
-
-        // B. 在該放置區生成對應的「放大版大圖」
-        const largeImg = document.createElement("img");
-        // 依據類型對應你的大圖檔名
-        largeImg.src = `./img/${draggedData}_large.png`;
-        largeImg.className = "placed_large_img";
-        zone.appendChild(largeImg);
-
-        // C. 將右側對應的選單項目加上「已完成/打勾」狀態
-        const sourceItem = document.querySelector(
-          `[data-item="${draggedData}"]`,
-        );
-        if (sourceItem) {
-          sourceItem.classList.add("completed");
-          sourceItem.setAttribute("draggable", "false"); // 鎖定不能再拖
-        }
-
-        // 清空放置區，防止重複放置
-        zone.removeAttribute("data-target");
-      } else {
-        // --- 答錯了！ ---
-        console.log("放錯位置！");
-
-        // 將該錯誤選項進行 disable 鎖定
-        const sourceItem = document.querySelector(
-          `[data-item="${draggedData}"]`,
-        );
-        if (sourceItem) {
-          sourceItem.classList.add("disabled");
-          sourceItem.setAttribute("draggable", "false");
-        }
-      }
-    });
+  document.addEventListener("pointermove", (event) => {
+    if (!activeDrag) return;
+    movePreview(getStagePoint(event));
   });
+
+  document.addEventListener("pointerup", (event) => {
+    if (!activeDrag) return;
+
+    const drag = activeDrag;
+    activeDrag = null;
+    const point = getStagePoint(event);
+    const centerX = point.x - drag.grabX + (drag.artwork.width * drag.assembly.scale) / 2;
+    const centerY = point.y - drag.grabY + (drag.artwork.height * drag.assembly.scale) / 2;
+    const targetCenterX = (drag.artwork.left + drag.artwork.width / 2) * drag.assembly.scale + drag.assembly.x;
+    const targetCenterY = (drag.artwork.top + drag.artwork.height / 2) * drag.assembly.scale + drag.assembly.y;
+    const isCorrectPosition =
+      Math.abs(centerX - targetCenterX) <= drag.artwork.width * drag.assembly.scale * 0.12 &&
+      Math.abs(centerY - targetCenterY) <= drag.artwork.height * drag.assembly.scale * 0.12;
+
+    drag.preview.remove();
+
+    if (!isCorrectPosition) {
+      drag.menuImage.hidden = false;
+      return;
+    }
+
+    drag.menuImage.hidden = false;
+    drag.selector.disabled = true;
+    stage.querySelector(`[data-placed="${drag.item}"]`).hidden = false;
+    stage.querySelector(`.placement_ok_${drag.item}`).hidden = false;
+
+    const targetLine = stage.querySelector(`[data-target="${drag.item}"]`);
+    targetLine.classList.add("is_fading");
+    window.setTimeout(() => {
+      targetLine.hidden = true;
+    }, 500);
+
+    completedCount += 1;
+    if (completedCount === Object.keys(itemSettings).length) {
+      window.setTimeout(() => {
+        window.location.href = "0_7_2.html";
+      }, 1000);
+    }
+  });
+
+  document.addEventListener("pointercancel", cancelDrag);
 });
