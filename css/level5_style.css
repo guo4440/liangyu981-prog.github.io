@@ -1,0 +1,372 @@
+/* Level 4：背景、開場說明彈窗與按鈕的樣式。 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 遊戲畫面固定填滿視窗，避免背景或動畫出現捲軸。 */
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game_stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+}
+
+/* 讓彈窗與按鈕一起由畫面上方落下，並在中央淡入、回彈定位。 */
+@keyframes dropDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-1080px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 控制開始按鈕延遲淡入。 */
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes popendBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+  82% {
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 最底層的黃色底色，填滿彈窗背景以外的區域。 */
+.bg_layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #ffc700;
+  z-index: 0;
+}
+
+/* 背景等比例填滿視窗；靜態開場圖與遊戲 GIF 共用版面設定。 */
+.level5_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 1;
+  background-image: url("../img/friedG_bg2.GIF");
+  z-index: 2;
+}
+.opacity_full {
+  opacity: 1;
+}
+.opacity_half {
+  opacity: 0.5;
+}
+
+/* 全畫面彈窗容器；與彈窗圖片、按鈕一起播放落下動畫。 */
+.modal5_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 2;
+  animation: dropDownFade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Level 2 說明彈窗圖片；完整置中顯示且不裁切。 */
+.popinfor5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-image: url("../img/introduce_popupwindow_5.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: 1;
+}
+
+/* 開始按鈕覆蓋在彈窗圖片上，定位、大小與 0.2 的彈窗按鈕一致。 */
+.start_button {
+  position: absolute;
+  left: 1187px;
+  bottom: 184px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/start_button_default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 2;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+/* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
+.start_button:active {
+  background-image: url("../img/start_button_active.png");
+}
+
+.stop_button {
+  position: absolute;
+  left: 860px;
+  bottom: 45px;
+  width: 220px;
+  height: 120px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/stop_button_default%20.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 12;
+  transition:
+    transform 100ms ease,
+    filter 100ms ease;
+}
+
+.stop_button:active {
+  background-image: url("../img/stop_button_active.png");
+  transform: translateY(4px) scale(0.96);
+  filter: brightness(0.9);
+}
+
+.stop_button:disabled {
+  cursor: default;
+}
+
+/* 計分條垂直置中，指針沿色帶全長上下移動。 */
+.score_bar_area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 11;
+  --score-sweep-start: 44.75px;
+  --score-sweep-end: 1040.6px;
+}
+
+.score_bar {
+  position: absolute;
+  top: 440px;
+  left: -360px;
+  display: flex;
+  width: 1080px;
+  height: 200px;
+  padding-right: 39.4px;
+  padding-left: 44.75px;
+  transform: rotate(90deg);
+  transform-origin: center;
+  overflow: hidden;
+  background-image: url("../img/catchEgg_line.gif");
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 1080px 608.1px;
+  --score-zone-1-width: 328.5px;
+  --score-zone-2-width: 133.2px;
+  --score-zone-3-width: 68px;
+  --score-zone-4-width: 136.8px;
+  --score-zone-5-width: 329.35px;
+}
+
+.score_zone {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 0;
+  height: 200px;
+  pointer-events: none;
+}
+
+.score_zone_1 {
+  width: var(--score-zone-1-width);
+}
+
+.score_zone_2 {
+  width: var(--score-zone-2-width);
+}
+
+.score_zone_3 {
+  width: var(--score-zone-3-width);
+}
+
+.score_zone_4 {
+  width: var(--score-zone-4-width);
+}
+
+.score_zone_5 {
+  width: var(--score-zone-5-width);
+}
+
+.score_pointer {
+  position: absolute;
+  top: calc(var(--score-sweep-start) - 110px);
+  left: 110px;
+  width: 260px;
+  height: 220px;
+  transform: rotate(90deg);
+  transform-origin: center;
+  object-fit: contain;
+  animation: scorePointerSweep 1s linear infinite alternate;
+}
+
+.score_pointer.is_stopped {
+  animation-play-state: paused;
+}
+
+@keyframes scorePointerSweep {
+  from {
+    top: calc(var(--score-sweep-start) - 110px);
+  }
+  to {
+    top: calc(var(--score-sweep-end) - 110px);
+  }
+}
+
+.feedback_gif_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.feedback_gif_container.is_visible {
+  display: block;
+}
+
+.feedback_gif_container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 1920px;
+  height: 1080px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.feedback_gif_container img.is_active {
+  display: block;
+}
+
+.feedback_gif_container img.feedback_overlay {
+  z-index: 11;
+  width: auto;
+  height: auto;
+  max-width: 700px;
+  max-height: 500px;
+}
+
+.feedback_gif_container img.feedback_overlay_top_left {
+  top: 60px;
+  left: 300px;
+  width: 600px;
+}
+
+.feedback_gif_container img.feedback_overlay_bottom_right {
+  top: auto;
+  right: 80px;
+  bottom: 80px;
+  left: auto;
+  width: 400px;
+}
+
+.visually_hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+.modal6_container {
+  position: absolute;
+  top: 81px;
+  left: 144px;
+  width: 1632px;
+  height: 918px;
+  z-index: 3;
+}
+
+.popwidow6 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1632px;
+  height: 918px;
+  background-image: url("../img/end_popupwindow6.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: scale(1);
+  animation: popendBounceIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.modal6_container .next_button {
+  position: absolute;
+  left: 1221px;
+  bottom: 202px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../img/next-button-default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 3;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+.modal6_container .next_button:active {
+  background-image: url("../img/next-button-active.png");
+}

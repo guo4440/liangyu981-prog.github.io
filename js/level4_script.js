@@ -89,11 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (game_timer && timer_intro) {
-    timer_intro.addEventListener(
-      "animationend",
-      start_timer,
-      { once: true },
-    );
+    timer_intro.addEventListener("animationend", start_timer, { once: true });
   } else if (game_timer) {
     start_timer();
   }

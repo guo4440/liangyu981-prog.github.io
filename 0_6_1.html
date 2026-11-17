@@ -1,0 +1,129 @@
+<!doctype html>
+<!-- Level 5 遊戲頁：垂直計分條、指針與三種分數回饋。 -->
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>（遊戲）</title>
+    <link href="./css/level5_style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="game_stage">
+      <div class="bg_layer"></div>
+      <div class="level5_bg opacity_full"></div>
+
+      <div class="score_bar_area">
+        <div class="score_bar" id="scoreBar" aria-label="分數區域">
+          <div
+            class="score_zone score_zone_1"
+            data-score="5"
+            aria-label="5 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_2"
+            data-score="10"
+            aria-label="10 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_3"
+            data-score="15"
+            aria-label="15 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_4"
+            data-score="10"
+            aria-label="10 分區域"
+          ></div>
+          <div
+            class="score_zone score_zone_5"
+            data-score="5"
+            aria-label="5 分區域"
+          ></div>
+        </div>
+        <img
+          class="score_pointer"
+          id="scorePointer"
+          src="./img/trangle.png"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
+
+      <button
+        class="stop_button"
+        id="stopBtn"
+        type="button"
+        aria-label="停止並結算"
+      >
+        <span class="visually_hidden"></span>
+      </button>
+
+      <aside
+        class="feedback_gif_container"
+        id="feedbackContainer"
+        aria-live="polite"
+        aria-hidden="true"
+      >
+        <!-- 替換各主回饋動畫時，直接修改下列 src。 -->
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif5"
+          src="./img/bad_friedG.gif"
+          alt="5 分"
+        />
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif10"
+          src="./img/friedG_bg2.GIF"
+          alt="10 分"
+        />
+        <img
+          class="feedback_gif_image"
+          id="feedbackGif15"
+          src="./img/good_friedG.GIF"
+          alt="15 分"
+        />
+
+        <!-- 可直接替換各分數左上與右下的陪襯 GIF 路徑。 -->
+        <img
+          class="feedback_overlay feedback_overlay_top_left"
+          id="feedbackGif5Top"
+          src="./img/badG.gif"
+          aria-hidden="true"
+        />
+        <img
+          class="feedback_overlay feedback_overlay_bottom_right"
+          id="feedbackGif5Bottom"
+          src="./img/question.GIF"
+          aria-hidden="true"
+        />
+        <img
+          class="feedback_overlay feedback_overlay_top_left"
+          id="feedbackGif10Top"
+          src="./img/feedback_overlay_10.gif"
+          aria-hidden="true"
+        />
+        <img
+          class="feedback_overlay feedback_overlay_bottom_right"
+          id="feedbackGif10Bottom"
+          src="./img/feedback_overlay_5_2.gif"
+          aria-hidden="true"
+        />
+        <img
+          class="feedback_overlay feedback_overlay_top_left"
+          id="feedbackGif15Top"
+          src="./img/GoodG.GIF"
+          aria-hidden="true"
+        />
+        <img
+          class="feedback_overlay feedback_overlay_bottom_right"
+          id="feedbackGif15Bottom"
+          src="./img/goodG2.GIF"
+          aria-hidden="true"
+        />
+      </aside>
+    </main>
+    <script src="./js/stage_scale.js"></script>
+    <script src="./js/level5_script.js"></script>
+  </body>
+</html>

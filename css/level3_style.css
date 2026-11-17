@@ -228,6 +228,21 @@ html {
 .stop_button:disabled {
   cursor: default;
 }
+/* 外層容器：負責控制「位置」與「圖層順序」 */
+.fired_container {
+  position: absolute;
+  top: 840px; /* 👈 調整上下位置（數字越大越往下） */
+  left: 180px; /* 👈 調整左右位置（數字越大越往右） */
+  z-index: 15; /* 👈 確保浮在背景和題目之上，不被遮住 */
+}
+
+/* 內層圖片：負責維持「原始比例」與微調「大小」 */
+.fired_img {
+  display: block; /* 消除圖片底部預設的微小空白 */
+  width: 180px;
+  height: auto; /* 👈 維持圖片原本的高度，不強制變形 */
+  max-width: none; /* 防止被其他全域樣式限制最大寬度 */
+}
 .score_bar_area {
   position: absolute;
   top: 150px;
