@@ -73,12 +73,12 @@ html {
 }
 
 .level2_bg {
-  background-image: url("../img/catchEgg_head.png");
+  background-image: url("./../img/catchEgg_head.png");
   opacity: 0.5;
 }
 
 .level2_bg_animated {
-  background-image: url("../img/catchEgg.gif");
+  background-image: url("./../img/catchEgg.gif");
 }
 
 /* 全畫面彈窗容器；與彈窗圖片、按鈕一起播放落下動畫。 */
@@ -99,7 +99,7 @@ html {
   left: 0;
   width: 1920px;
   height: 1080px;
-  background-image: url("../img/introduce_popupwindow_2.png");
+  background-image: url("./../img/introduce_popupwindow_2.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -115,7 +115,7 @@ html {
   height: 80px;
   border: none;
   background-color: transparent;
-  background-image: url("../img/start_button_default.png");
+  background-image: url("./../img/start_button_default.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -128,7 +128,7 @@ html {
 
 /* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
 .start_button:active {
-  background-image: url("../img/start_button_active.png");
+  background-image: url("./../img/start_button_active.png");
 }
 .stop_button {
   position: absolute;
@@ -138,7 +138,7 @@ html {
   height: 120px;
   border: none;
   background-color: transparent;
-  background-image: url("../img/stop_button_default%20.png");
+  background-image: url("./../img/stop_button_default%20.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -151,13 +151,28 @@ html {
 }
 
 .stop_button:active {
-  background-image: url("../img/stop_button_active.png");
+  background-image: url("./../img/stop_button_active.png");
   transform: translateY(4px) scale(0.96);
   filter: brightness(0.9);
 }
 
 .stop_button:disabled {
   cursor: default;
+}
+/* 外層容器：負責控制「位置」與「圖層順序」 */
+.fired_container {
+  position: absolute;
+  top: 0px; /* 👈 調整上下位置（數字越大越往下） */
+  left: 300px; /* 👈 調整左右位置（數字越大越往右） */
+  z-index: 15; /* 👈 確保浮在背景和題目之上，不被遮住 */
+}
+
+/* 內層圖片：負責維持「原始比例」與微調「大小」 */
+.fired_img {
+  display: block; /* 消除圖片底部預設的微小空白 */
+  width: 180px;
+  height: auto; /* 👈 維持圖片原本的高度，不強制變形 */
+  max-width: none; /* 防止被其他全域樣式限制最大寬度 */
 }
 
 .score_bar_area {
@@ -170,7 +185,7 @@ html {
 }
 
 .score_bar {
-  background-image: url(../img/catchEgg_line.gif);
+  background-image: url(./../img/catchEgg_line.gif);
   position: absolute;
   top: -40px;
   left: -53.5px;
@@ -200,6 +215,7 @@ html {
   height: 563px;
   max-width: none;
   pointer-events: none;
+  display: none;
 }
 
 .score_zone {
@@ -241,7 +257,7 @@ html {
 }
 
 .score_pointer.is_stopped {
-  background-image: url(../img/trangle.png);
+  background-image: url(./../img/trangle.png);
   animation-play-state: paused;
 }
 
@@ -311,7 +327,7 @@ body {
   width: 1920px;
   height: 1080px;
   background-color: #ffc700;
-  background-image: url(../img/catchEgg.gif);
+  background-image: url(./../img/catchEgg.gif);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

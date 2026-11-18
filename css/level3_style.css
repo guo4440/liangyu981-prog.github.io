@@ -87,13 +87,13 @@ html {
   background-position: center;
   background-size: 1920px 1080px;
   z-index: 1;
-  background-image: url("../img/friedegg_animation.gif");
+  background-image: url("./../img/friedegg_animation.gif");
 }
 
 .level3_bg {
   background-color: #e57b0b;
   opacity: 1;
-  background-image: url("../img/friedegg_animation.gif");
+  background-image: url("./../img/friedegg_animation.gif");
   z-index: 2;
 }
 .opacity_full {
@@ -121,7 +121,7 @@ html {
   left: 0;
   width: 1920px;
   height: 1080px;
-  background-image: url("../img/introduce_popupwindow_3.png");
+  background-image: url("./../img/introduce_popupwindow_3.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -137,7 +137,7 @@ html {
   height: 80px;
   border: none;
   background-color: transparent;
-  background-image: url("../img/start_button_default.png");
+  background-image: url("./../img/start_button_default.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -150,7 +150,7 @@ html {
 
 /* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
 .start_button:active {
-  background-image: url("../img/start_button_active.png");
+  background-image: url("./../img/start_button_active.png");
 }
 
 .modal4_container {
@@ -168,7 +168,7 @@ html {
   left: 0;
   width: 1632px;
   height: 918px;
-  background-image: url("../img/end_popupwindowegg.png");
+  background-image: url("./../img/end_popupwindowegg.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -184,7 +184,7 @@ html {
   height: 80px;
   border: none;
   background-color: transparent;
-  background-image: url("../img/next-button-default.png");
+  background-image: url("./../img/next-button-default.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -196,7 +196,7 @@ html {
 }
 
 .modal4_container .next_button:active {
-  background-image: url("../img/next-button-active.png");
+  background-image: url("./../img/next-button-active.png");
 }
 
 .stop_button {
@@ -207,7 +207,7 @@ html {
   height: 120px;
   border: none;
   background-color: transparent;
-  background-image: url("../img/stop_button_default%20.png");
+  background-image: url("./../img/stop_button_default%20.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -220,13 +220,28 @@ html {
 }
 
 .stop_button:active {
-  background-image: url("../img/stop_button_active.png");
+  background-image: url("./../img/stop_button_active.png");
   transform: translateY(4px) scale(0.96);
   filter: brightness(0.9);
 }
 
 .stop_button:disabled {
   cursor: default;
+}
+/* 外層容器：負責控制「位置」與「圖層順序」 */
+.fired_container {
+  position: absolute;
+  top: 840px; /* 👈 調整上下位置（數字越大越往下） */
+  left: 180px; /* 👈 調整左右位置（數字越大越往右） */
+  z-index: 15; /* 👈 確保浮在背景和題目之上，不被遮住 */
+}
+
+/* 內層圖片：負責維持「原始比例」與微調「大小」 */
+.fired_img {
+  display: block; /* 消除圖片底部預設的微小空白 */
+  width: 180px;
+  height: auto; /* 👈 維持圖片原本的高度，不強制變形 */
+  max-width: none; /* 防止被其他全域樣式限制最大寬度 */
 }
 .score_bar_area {
   position: absolute;
@@ -238,7 +253,7 @@ html {
 }
 
 .score_bar {
-  background-image: url(../img/friedEgg_line.gif);
+  background-image: url(./../img/friedEgg_line.gif);
   position: absolute;
   top: -90px;
   left: -120px;
@@ -300,7 +315,7 @@ html {
   height: 220px;
   transform: rotate(90deg);
   object-fit: contain;
-  animation: scorePointerSweep 2s linear infinite alternate;
+  animation: scorePointerSweep 1.3s linear infinite alternate;
 }
 
 .score_pointer.is_stopped {
@@ -383,7 +398,7 @@ body {
   width: 1920px;
   height: 1080px;
   background-color: #e57b0b;
-  background-image: url(../img/friedegg_animation.gif);
+  background-image: url(./../img/friedegg_animation.gif);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

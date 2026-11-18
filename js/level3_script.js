@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     next_button.addEventListener("click", (event) => {
       event.preventDefault();
       setTimeout(() => {
-        window.location.href = "0_5.html";
+        window.location.href = "./0_5.html";
       }, 200);
     });
   }
@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (start_button) {
     start_button.addEventListener("click", (event) => {
       event.preventDefault();
+      localStorage.setItem("level3Score", "0");
       setTimeout(() => {
-        window.location.href = "0_4_1.html";
+        window.location.href = "./0_4_1.html";
       }, 200);
     });
   }
@@ -70,10 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const earned_score = Number(hit_zone.dataset.score);
+    const level_score = Number(localStorage.getItem("level3Score") ?? "0") + earned_score;
     const saved_total = Number(localStorage.getItem("totalScore") ?? "0");
     const current_total = Number.isFinite(saved_total) ? saved_total : 0;
     const new_score = current_total + earned_score;
+    localStorage.setItem("level3Score", String(level_score));
     localStorage.setItem("totalScore", String(new_score));
+    console.log(`[Level 3] 本關得分 ${level_score} 分（本次 +${earned_score}），累計總分 ${new_score} 分`);
 
     Object.values(feedback_images_by_id).forEach((image) => {
       image?.classList.remove("is_active");
@@ -91,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.remove("feedback_visible");
     }, 2000);
     setTimeout(() => {
-      window.location.href = "0_4_2.html";
+      window.location.href = "./0_4_2.html";
     }, 2000);
   });
   //過場動畫//

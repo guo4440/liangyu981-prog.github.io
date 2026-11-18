@@ -11,9 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
       // Level 1 是新遊戲起點，從 0 分開始並記錄本關刷新時要恢復的起始分數。
       localStorage.setItem("level1ScoreBase", "0");
       localStorage.setItem("totalScore", "0");
+      ["level1Score", "level2Score", "level3Score", "level4Score", "level5Score", "level6Score"].forEach((key) => {
+        localStorage.removeItem(key);
+      });
+      console.log("[計分] 新遊戲開始，累計總分：0 分");
 
       setTimeout(() => {
-        window.location.href = "0_2_1.html";
+        window.location.href = "./0_2_1.html";
       }, 200);
     });
   }
@@ -24,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
 
       setTimeout(() => {
-        window.location.href = "0_3.html";
+        window.location.href = "./0_3.html";
       }, 200);
     });
   }
@@ -134,8 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
           chicken.classList.add("clicked");
           current_score += score_by_type[type];
           localStorage.setItem("totalScore", current_score);
+          localStorage.setItem("level1Score", String(current_score));
           update_score_display();
-          console.log("目前累積總分：", current_score);
+          console.log(`[Level 1] 本關目前 ${current_score} 分，累計總分 ${current_score} 分`);
 
           setTimeout(() => {
             chicken.remove();
@@ -162,12 +167,13 @@ document.addEventListener("DOMContentLoaded", () => {
       clear_all_holes();
       current_score = Math.min(20, Math.max(5, current_score));
       localStorage.setItem("totalScore", current_score);
+      localStorage.setItem("level1Score", String(current_score));
       update_score_display();
-      console.log("Level 1 結束，累計分數為：", current_score);
+      console.log(`[Level 1 結算] 本關得分 ${current_score} 分，累計總分 ${current_score} 分`);
 
       // GIF 全長約 16.17 秒；四波遊戲共 16 秒，等待剩餘時間後跳轉
       setTimeout(() => {
-        window.location.href = "0_2_2.html";
+        window.location.href = "./0_2_2.html";
       }, 170);
     }
   }

@@ -1,0 +1,477 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 遊戲畫面固定填滿視窗，避免背景或動畫出現捲軸。 */
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game_stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+  background-color: #e57b0b;
+}
+
+/* 讓彈窗與按鈕一起由畫面上方落下，並在中央淡入、回彈定位。 */
+@keyframes dropDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-1080px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 控制開始按鈕延遲淡入。 */
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes popendBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+  82% {
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* 最底層的黃色底色，填滿彈窗背景以外的區域。 */
+.bg_layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: #e57b0b;
+  z-index: 0;
+}
+
+/* 背景等比例填滿視窗；靜態開場圖與遊戲 GIF 共用版面設定。 */
+.level6_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 1;
+  background-image: url("./../img/introduce_popupwindow_6.png");
+  z-index: 2;
+}
+
+.level6_bg.intro6_background {
+  background-image: url("./../img/level6_begin.PNG");
+}
+
+.level6_bg.fini_background {
+  background-image: url("./../img/level6_fini.PNG");
+}
+.opacity_full {
+  opacity: 1;
+}
+.opacity_half {
+  opacity: 0.5;
+}
+
+/* 全畫面彈窗容器；與彈窗圖片、按鈕一起播放落下動畫。 */
+.modal6_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 2;
+  animation: dropDownFade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Level 2 說明彈窗圖片；完整置中顯示且不裁切。 */
+.popinfor6 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-image: url("./../img/introduce_popupwindow_6.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: 1;
+}
+
+/* 開始按鈕覆蓋在彈窗圖片上，定位、大小與 0.2 的彈窗按鈕一致。 */
+.start_button {
+  position: absolute;
+  left: 1187px;
+  bottom: 184px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("./../img/start_button_default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 2;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+/* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
+.start_button:active {
+  background-image: url("./../img/start_button_active.png");
+}
+
+.stop_button {
+  position: absolute;
+  left: 860px;
+  bottom: 45px;
+  width: 220px;
+  height: 120px;
+  border: none;
+  background-color: transparent;
+  background-image: url("./../img/stop_button_default%20.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 12;
+  transition:
+    transform 100ms ease,
+    filter 100ms ease;
+}
+
+.stop_button:active {
+  background-image: url("./../img/stop_button_active.png");
+  transform: translateY(4px) scale(0.96);
+  filter: brightness(0.9);
+}
+
+.stop_button:disabled {
+  cursor: default;
+}
+.modal7_container {
+  position: absolute;
+  top: 81px;
+  left: 144px;
+  width: 1632px;
+  height: 918px;
+  z-index: 3;
+}
+
+.popwidow7 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1632px;
+  height: 918px;
+  background-image: url("./../img/end_popupwindow7.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: scale(1);
+  animation: popendBounceIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.modal7_container .next_button {
+  position: absolute;
+  left: 1221px;
+  bottom: 202px;
+  width: 180px;
+  height: 80px;
+  border: none;
+  background-color: transparent;
+  background-image: url("./../img/next-button-default.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 3;
+  opacity: 0;
+  animation: buttonFadeIn 0.3s ease 1s forwards;
+}
+
+.modal7_container .next_button:active {
+  background-image: url("./../img/next-button-active.png");
+}
+.scene_layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 0_7_2 轉場秒數可在這裡調整。 */
+.level6_transition {
+  --level6-end-hold: 1s;
+  --level6-flash-duration: 3s;
+  --level6-fini-hold: 3s;
+  --level6-decorations-delay: 0.5s;
+}
+
+.transition_scene,
+.transition_flash {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+}
+
+.transition_decorations {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.transition_decorations.is_visible {
+  opacity: 1;
+}
+
+.transition_bling {
+  position: absolute;
+  inset: 0;
+  background: url("./../img/Bling%20bling%20.PNG") center / 100% 100% no-repeat;
+  transform-origin: center;
+}
+
+.transition_decorations.is_visible .transition_bling {
+  animation: blingFlip 0.8s steps(1, end) infinite;
+}
+
+@keyframes blingFlip {
+  0%,
+  49.99% {
+    transform: scaleX(1);
+  }
+  50%,
+  100% {
+    transform: scaleX(-1);
+  }
+}
+
+.transition_fini_button {
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
+  width: 800px;
+  height: 450px;
+  background: url("./../img/level6_fini_button.gif") right bottom / contain
+    no-repeat;
+}
+
+.transition_fini_top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 550px;
+  background: url("./../img/level6_fini_top.gif") left top / contain no-repeat;
+}
+
+.transition_scene {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.transition_end {
+  z-index: 1;
+  background-image: url("./../img/level6_end.PNG");
+}
+
+.transition_fini {
+  z-index: 2;
+  opacity: 0;
+  background-image: url("./../img/level6_fini.PNG");
+  transition: opacity 0s;
+}
+
+.transition_fini.is_visible {
+  opacity: 1;
+}
+
+.transition_flash {
+  z-index: 3;
+  opacity: 0;
+  background-color: #fff;
+  pointer-events: none;
+  animation: transitionWhiteFlash var(--level6-flash-duration) ease-in-out
+    var(--level6-end-hold) forwards;
+}
+
+@keyframes transitionWhiteFlash {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+/* 組裝畫面素材共用調整值：改這三個變數即可移動或縮放整組底圖與輪廓。
+   left 為負值會向左移；scale 小於 1 會等比例縮小。 */
+.game_stage {
+  --assembly-x: 0px;
+  --assembly-y: 0px;
+  --assembly-scale: 1;
+}
+
+.cutting_board,
+.placed_item,
+.target_line {
+  transform: translate(var(--assembly-x), var(--assembly-y))
+    scale(var(--assembly-scale));
+  transform-origin: top left;
+}
+
+.cutting_board {
+  z-index: 0;
+}
+
+.intro6_background {
+  z-index: 1;
+}
+
+.placed_cake,
+.target_cake {
+  z-index: 1;
+}
+
+.placed_egg,
+.target_egg {
+  z-index: 2;
+}
+
+.placed_g,
+.target_g {
+  z-index: 3;
+}
+
+.target_line {
+  opacity: 1;
+  transition: opacity 500ms ease;
+}
+
+.target_line.is_fading {
+  opacity: 0;
+}
+
+.menu_item {
+  z-index: 12;
+}
+
+.cube_frame {
+  z-index: 11;
+}
+
+.placement_ok {
+  position: absolute;
+  z-index: 12;
+  width: 224px;
+  height: 216px;
+  background-image: url("./../img/ok.gif");
+  background-repeat: no-repeat;
+  background-size: 1920px 1080px;
+  background-position: -1470px -400px;
+  pointer-events: none;
+}
+
+/* 三張 cube 分別在右側上、中、下；核取圖會裁切自 ok.gif 的勾號區域。 */
+.placement_ok_g {
+  left: 1473px;
+  top: 99px;
+}
+.placement_ok_cake {
+  left: 1468px;
+  top: 400px;
+}
+.placement_ok_egg {
+  left: 1462px;
+  top: 745px;
+}
+
+.item_selector {
+  position: absolute;
+  z-index: 13;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+
+.item_selector:active {
+  cursor: grabbing;
+}
+
+.item_selector:disabled {
+  cursor: default;
+}
+
+.selector_g {
+  top: 99px;
+  left: 1485px;
+  width: 194px;
+  height: 211px;
+}
+
+.selector_cake {
+  top: 445px;
+  left: 1474px;
+  width: 202px;
+  height: 138px;
+}
+
+.selector_egg {
+  top: 766px;
+  left: 1472px;
+  width: 195px;
+  height: 148px;
+}
+
+.drag_preview {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  background-repeat: no-repeat;
+}

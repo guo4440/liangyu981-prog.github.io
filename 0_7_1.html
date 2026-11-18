@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>食材組裝</title>
+    <link rel="preload" as="image" href="./img/big_g.PNG" />
+    <link rel="preload" as="image" href="./img/big_cake.PNG" />
+    <link rel="preload" as="image" href="./img/big_egg.PNG" />
+    <link href="./css/level6_style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="game_stage" aria-label="食材組裝遊戲">
+      <img class="scene_layer cutting_board" src="./img/cutting.gif" alt="" />
+
+      <img
+        class="scene_layer placed_item placed_cake"
+        data-placed="cake"
+        src="./img/big_cake.PNG"
+        alt=""
+        hidden
+      />
+      <img
+        class="scene_layer placed_item placed_egg"
+        data-placed="egg"
+        src="./img/big_egg.PNG"
+        alt=""
+        hidden
+      />
+      <img
+        class="scene_layer placed_item placed_g"
+        data-placed="g"
+        src="./img/big_g.PNG"
+        alt=""
+        hidden
+      />
+
+      <img
+        class="scene_layer target_line target_cake"
+        data-target="cake"
+        src="./img/cake_line.PNG"
+        alt=""
+      />
+      <img
+        class="scene_layer target_line target_egg"
+        data-target="egg"
+        src="./img/egg_line.PNG"
+        alt=""
+      />
+      <img
+        class="scene_layer target_line target_g"
+        data-target="g"
+        src="./img/G_line.PNG"
+        alt=""
+      />
+
+      <img
+        class="scene_layer menu_item"
+        data-menu-item="g"
+        src="./img/small_g.PNG"
+        alt=""
+      />
+      <img
+        class="scene_layer menu_item"
+        data-menu-item="cake"
+        src="./img/small_cake.PNG"
+        alt=""
+      />
+      <img
+        class="scene_layer menu_item"
+        data-menu-item="egg"
+        src="./img/small_egg.PNG"
+        alt=""
+      />
+
+      <img class="scene_layer cube_frame" src="./img/cube1.PNG" alt="" />
+      <img class="scene_layer cube_frame" src="./img/cube2.PNG" alt="" />
+      <img class="scene_layer cube_frame" src="./img/cube3.PNG" alt="" />
+
+      <div class="placement_ok placement_ok_g" aria-hidden="true" hidden></div>
+      <div
+        class="placement_ok placement_ok_cake"
+        aria-hidden="true"
+        hidden
+      ></div>
+      <div
+        class="placement_ok placement_ok_egg"
+        aria-hidden="true"
+        hidden
+      ></div>
+
+      <button
+        class="item_selector selector_g"
+        type="button"
+        data-item="g"
+        aria-label="拖曳 G 食材"
+      ></button>
+      <button
+        class="item_selector selector_cake"
+        type="button"
+        data-item="cake"
+        aria-label="拖曳蛋糕食材"
+      ></button>
+      <button
+        class="item_selector selector_egg"
+        type="button"
+        data-item="egg"
+        aria-label="拖曳蛋食材"
+      ></button>
+    </main>
+    <script src="./js/stage_scale.js"></script>
+    <script src="./js/level6_script.js"></script>
+  </body>
+</html>

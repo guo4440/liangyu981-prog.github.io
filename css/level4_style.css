@@ -162,7 +162,7 @@ html {
   background-position: center;
   background-size: cover;
   opacity: 1;
-  background-image: url(../img/0.5_level4_begin.gif);
+  background-image: url(./../img/0.5_level4_begin.gif);
   z-index: 2;
 }
 .opacity_full {
@@ -190,7 +190,7 @@ html {
   left: 0;
   width: 1920px;
   height: 1080px;
-  background-image: url("../img/introduce_popupwindow_4.png");
+  background-image: url("./../img/introduce_popupwindow_4.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -206,7 +206,7 @@ html {
   height: 80px;
   border: none;
   background-color: transparent;
-  background-image: url("../img/start_button_default.png");
+  background-image: url("./../img/start_button_default.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -219,7 +219,7 @@ html {
 
 /* 按住開始按鈕時切換成按下狀態圖片，提供操作回饋。 */
 .start_button:active {
-  background-image: url("../img/start_button_active.png");
+  background-image: url("./../img/start_button_active.png");
 }
 
 .Gtimer {
@@ -255,7 +255,7 @@ html {
   width: 576px;
   height: 576px;
   transform: translate(-288px, -288px);
-  background-image: url("../img/Gtimer_4.5s.png");
+  background-image: url("./../img/Gtimer_4.5s.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -333,108 +333,108 @@ html {
 
 /* --- 按鈕 1 --- */
 #btnOption1 {
-  background-image: url(../img/chicken_btn_default.png);
+  background-image: url(./../img/chicken_btn_default.png);
 }
 #btnOption1:hover {
-  background-image: url(../img/chicken_btn_hover.png);
+  background-image: url(./../img/chicken_btn_hover.png);
 }
 #btnOption1:active,
 #btnOption1.is_clicked {
-  background-image: url(../img/chicken_btn_active.png);
+  background-image: url(./../img/chicken_btn_active.png);
 }
 
 /* --- 按鈕 2 --- */
 #btnOption2 {
-  background-image: url(../img/kitchen_btn_default.png);
+  background-image: url(./../img/kitchen_btn_default.png);
 }
 #btnOption2:hover {
-  background-image: url(../img/kitchen_btn_hover.png);
+  background-image: url(./../img/kitchen_btn_hover.png);
 }
 #btnOption2:active,
 #btnOption2.is_clicked {
-  background-image: url(../img/kitchen_btn_active.png);
+  background-image: url(./../img/kitchen_btn_active.png);
 }
 
 /* --- 按鈕 3 --- */
 #btnOption3 {
-  background-image: url(../img/checkin_btn_default.png);
+  background-image: url(./../img/checkin_btn_default.png);
 }
 #btnOption3:hover {
-  background-image: url(../img/checkin_btn_hover.png);
+  background-image: url(./../img/checkin_btn_hover.png);
 }
 #btnOption3:active,
 #btnOption3.is_clicked {
-  background-image: url(../img/checkin_btn_active.png);
+  background-image: url(./../img/checkin_btn_active.png);
 }
 /* --- 第二關：按鈕 1（這題的正確答案） --- */
 #btnOption4 {
-  background-image: url(../img/18_btn_default.png);
+  background-image: url(./../img/18_btn_default.png);
 }
 #btnOption4:hover {
-  background-image: url(../img/18_btn_hover.png);
+  background-image: url(./../img/18_btn_hover.png);
 }
 #btnOption4:active,
 #btnOption4.is_clicked {
-  background-image: url(../img/18_btn_active.png);
+  background-image: url(./../img/18_btn_active.png);
 }
 
 /* --- 第二關：按鈕 2 --- */
 #btnOption5 {
-  background-image: url("../img/19_btn_default.png");
+  background-image: url("./../img/19_btn_default.png");
 }
 #btnOption5:hover {
-  background-image: url(../img/19_btn_hover.png);
+  background-image: url(./../img/19_btn_hover.png);
 }
 #btnOption5:active,
 #btnOption5.is_clicked {
-  background-image: url(../img/19_btn_active.png);
+  background-image: url(./../img/19_btn_active.png);
 }
 
 /* --- 第二關：按鈕 3 --- */
 #btnOption6 {
-  background-image: url(../img/20_btn_default.png);
+  background-image: url(./../img/20_btn_default.png);
 }
 #btnOption6:hover {
-  background-image: url(../img/20_btn_hover.png);
+  background-image: url(./../img/20_btn_hover.png);
 }
 #btnOption6:active,
 #btnOption6.is_clicked {
-  background-image: url(../img/20_btn_active.png);
+  background-image: url(./../img/20_btn_active.png);
 }
 /* --- 第三關：按鈕 1 --- */
 #btnOption7 {
-  background-image: url(../img/fandigan_btn_default.png);
+  background-image: url(./../img/fandigan_btn_default.png);
 }
 #btnOption7:hover {
-  background-image: url(../img/fandigan_btn_hover.png);
+  background-image: url(./../img/fandigan_btn_hover.png);
 }
 #btnOption7:active,
 #btnOption7.is_clicked {
-  background-image: url(../img/fandigans_btn_active.png);
+  background-image: url(./../img/fandigans_btn_active.png);
 }
 
 /* --- 第三關：按鈕 2 --- */
 #btnOption8 {
-  background-image: url(../img/beigi_btn_default.png);
+  background-image: url(./../img/beigi_btn_default.png);
 }
 #btnOption8:hover {
-  background-image: url(../img/beigi_btn_hover.png);
+  background-image: url(./../img/beigi_btn_hover.png);
 }
 #btnOption8:active,
 #btnOption8.is_clicked {
-  background-image: url(../img/beigi_btn_active.png);
+  background-image: url(./../img/beigi_btn_active.png);
 }
 
 /* --- 第三關：按鈕 3（這題的正確答案） --- */
 #btnOption9 {
-  background-image: url(../img/naigi_btn_default.png);
+  background-image: url(./../img/naigi_btn_default.png);
 }
 #btnOption9:hover {
-  background-image: url(../img/naigi_btn_hover.png);
+  background-image: url(./../img/naigi_btn_hover.png);
 }
 #btnOption9:active,
 #btnOption9.is_clicked {
-  background-image: url(../img/naigi_btn_active.png);
+  background-image: url(./../img/naigi_btn_active.png);
 }
 
 .modal5_container {
@@ -452,7 +452,7 @@ html {
   left: 0;
   width: 1632px;
   height: 918px;
-  background-image: url("../img/end_popupwindow5.png");
+  background-image: url("./../img/end_popupwindow5.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -468,7 +468,7 @@ html {
   height: 80px;
   border: none;
   background-color: transparent;
-  background-image: url("../img/next-button-default.png");
+  background-image: url("./../img/next-button-default.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -480,5 +480,5 @@ html {
 }
 
 .modal5_container .next_button:active {
-  background-image: url("../img/next-button-active.png");
+  background-image: url("./../img/next-button-active.png");
 }
