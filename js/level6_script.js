@@ -5,10 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (startButton) {
     startButton.addEventListener("click", (event) => {
       event.preventDefault();
-      localStorage.setItem("level1ScoreBase", "0");
-      localStorage.setItem("totalScore", "0");
+      localStorage.setItem("level6Score", "0");
       window.setTimeout(() => {
-        window.location.href = "0_7_1.html";
+        window.location.href = "./0_7_1.html";
       }, 200);
     });
   }
@@ -17,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nextButton.addEventListener("click", (event) => {
       event.preventDefault();
       window.setTimeout(() => {
-        window.location.href = "0_8.html";
+        window.location.href = "./0_2.html";
       }, 200);
     });
   }
@@ -40,12 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
         stage.querySelector(".transition_decorations").classList.add("is_visible");
       }, getDurationMs("--level6-decorations-delay"));
       window.setTimeout(() => {
-        window.location.href = "0_7_3.html";
+        window.location.href = "./0_7_3.html";
       }, getDurationMs("--level6-fini-hold"));
     }, { once: true });
     return;
   }
   if (!stage?.querySelector(".item_selector")) return;
+
+  const assemblyStartedAt = performance.now();
 
   const itemSettings = {
     g: {
@@ -177,8 +178,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     completedCount += 1;
     if (completedCount === Object.keys(itemSettings).length) {
+      const elapsedSeconds = (performance.now() - assemblyStartedAt) / 1000;
+      // 門檻依序判斷：10 秒內 17 分、10–15 秒 10 分、15–20 秒 5 分，超過 20 秒 0 分。
+      const earnedScore =
+        elapsedSeconds <= 10
+          ? 17
+          : elapsedSeconds <= 15
+            ? 10
+            : elapsedSeconds <= 20
+              ? 5
+              : 0;
+      const savedTotal = Number(localStorage.getItem("totalScore") ?? "0");
+      const currentTotal = Number.isFinite(savedTotal) ? savedTotal : 0;
+      const newTotal = currentTotal + earnedScore;
+      localStorage.setItem("level6Score", String(earnedScore));
+      localStorage.setItem("totalScore", String(newTotal));
+      console.log(`[Level 6] 本關得分 ${earnedScore} 分（組裝耗時 ${elapsedSeconds.toFixed(2)} 秒），累計總分 ${newTotal} 分`);
       window.setTimeout(() => {
-        window.location.href = "0_7_2.html";
+        window.location.href = "./0_7_2.html";
       }, 1000);
     }
   });

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     next_button.addEventListener("click", (event) => {
       event.preventDefault();
       setTimeout(() => {
-        window.location.href = "0_3.html";
+        window.location.href = "./0_3.html";
       }, 200);
     });
   }
@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (start_button) {
     start_button.addEventListener("click", (event) => {
       event.preventDefault();
+      localStorage.setItem("level2Score", "0");
       setTimeout(() => {
-        window.location.href = "0_3_1.html";
+        window.location.href = "./0_3_1.html";
       }, 200);
     });
   }
@@ -64,10 +65,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const earned_score = Number(hit_zone.dataset.score);
+    const level_score = Number(localStorage.getItem("level2Score") ?? "0") + earned_score;
     const saved_total = Number(localStorage.getItem("totalScore") ?? "0");
     const current_total = Number.isFinite(saved_total) ? saved_total : 0;
     const new_score = current_total + earned_score;
+    localStorage.setItem("level2Score", String(level_score));
     localStorage.setItem("totalScore", String(new_score));
+    console.log(`[Level 2] 本關得分 ${level_score} 分（本次 +${earned_score}），累計總分 ${new_score} 分`);
 
     if (feedback_score) {
       Object.values(feedback_gifs).forEach((image) => {
@@ -84,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       feedback_container.setAttribute("aria-hidden", "true");
     }, 2000);
     setTimeout(() => {
-      window.location.href = "0_3_2.html";
+      window.location.href = "./0_3_2.html";
     }, 2000);
   });
 });
@@ -112,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. 第二段播完後跳轉至下一頁
     setTimeout(() => {
-      window.location.href = "0_4.html";
+      window.location.href = "./0_4.html";
     }, part2_duration);
   }, part1_duration);
 });

@@ -156,7 +156,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(../img/0.2_level1_begin.gif);
+  background-image: url(./../img/0.2_level1_begin.gif);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -188,7 +188,7 @@ html {
   left: 0;
   width: 1920px;
   height: 1080px;
-  background-image: url("../img/introduce_popupwindow_1.png");
+  background-image: url("./../img/introduce_popupwindow_1.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -208,7 +208,7 @@ html {
   cursor: pointer;
   outline: none;
 
-  background-image: url("../img/start_button_default.png");
+  background-image: url("./../img/start_button_default.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -221,7 +221,7 @@ html {
 }
 
 .start_button:active {
-  background-image: url("../img/start_button_active.png");
+  background-image: url("./../img/start_button_active.png");
 }
 
 /* 結束畫面與圖片按鈕 */
@@ -236,7 +236,7 @@ html {
 .popend {
   position: absolute;
   inset: 0;
-  background-image: url("../img/end_popupwindow.png");
+  background-image: url("./../img/end_popupwindow.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -252,7 +252,7 @@ html {
   height: 80px;
   border: none;
   background-color: transparent;
-  background-image: url(../img/next-button-default.png);
+  background-image: url(./../img/next-button-default.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -264,7 +264,7 @@ html {
 }
 
 .next_button:active {
-  background-image: url(../img/next-button-active.png);
+  background-image: url(./../img/next-button-active.png);
 }
 
 /*0.2.1*/
@@ -328,7 +328,7 @@ html {
   width: 576px;
   height: 576px;
   transform: translate(-288px, -288px);
-  background-image: url("../img/Gtimer_4.5s.png");
+  background-image: url("./../img/Gtimer_4.5s.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -421,12 +421,12 @@ html {
 .chicken_type_1 {
   width: 220px !important;
   height: 220px !important;
-  background-image: url(../img/normal_chicken_1.png);
+  background-image: url(./../img/normal_chicken_1.png);
 }
 .chicken_type_1.clicked {
   width: 220px !important;
   height: 220px !important;
-  background-image: url(../img/normal_chicken_2.png);
+  background-image: url(./../img/normal_chicken_2.png);
 }
 
 /* 第二種雞：預設與被抓狀態 */
@@ -435,22 +435,22 @@ html {
   left: 0;
   width: 230px !important;
   height: 230px !important;
-  background-image: url(../img/gold_chicken_1.png);
+  background-image: url(./../img/gold_chicken_1.png);
 }
 .chicken_type_2.clicked {
   width: 230px !important;
   height: 230px !important;
-  background-image: url(../img/gold_chicken_2.png);
+  background-image: url(./../img/gold_chicken_2.png);
 }
 
 /* 第三種雞：預設與被抓狀態 */
 .chicken_type_3 {
   width: 220px !important;
   height: 220px !important;
-  background-image: url(../img/bad_chicken_1.png);
+  background-image: url(./../img/bad_chicken_1.png);
 }
 .chicken_type_3.clicked {
   width: 220px !important;
   height: 220px !important;
-  background-image: url(../img/bad_chicken_2.png);
+  background-image: url(./../img/bad_chicken_2.png);
 }

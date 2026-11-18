@@ -8,12 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // Prevent the default action so navigation can happen after the press feedback.
       e.preventDefault();
 
-      // Level 1 是新遊戲起點，從 0 分開始並記錄本關刷新時要恢復的起始分數。
-      localStorage.setItem("level1ScoreBase", "0");
-      localStorage.setItem("totalScore", "0");
+      localStorage.setItem("level4Score", "0");
 
       setTimeout(() => {
-        window.location.href = "0_5_1.html";
+        window.location.href = "./0_5_1.html";
       }, 200);
     });
   }
@@ -24,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
 
       setTimeout(() => {
-        window.location.href = "0_6.html";
+        window.location.href = "./0_6.html";
       }, 200);
     });
   }
@@ -80,11 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentPath = window.location.pathname;
 
     if (currentPath.includes("0_5_1.html")) {
-      window.location.href = "0_5_2.html";
+      window.location.href = "./0_5_2.html";
     } else if (currentPath.includes("0_5_2.html")) {
-      window.location.href = "0_5_3.html";
+      window.location.href = "./0_5_3.html";
     } else if (currentPath.includes("0_5_3.html")) {
-      window.location.href = "0_5_4.html";
+      window.location.href = "./0_5_4.html";
     }
   }
 
@@ -106,12 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const resultType = button.getAttribute("data-answer");
       const earnedScore = resultType === "correct" ? 6 : 0;
+      const levelScore = Number(localStorage.getItem("level4Score") ?? "0") + earnedScore;
       const currentTotal = Number(localStorage.getItem("totalScore") ?? "0");
       const newTotal = currentTotal + earnedScore;
+      localStorage.setItem("level4Score", String(levelScore));
       localStorage.setItem("totalScore", String(newTotal));
 
       console.log(
-        `[答題結果] 本題得分: ${earnedScore} 分, 目前累積總分: ${newTotal} 分`,
+        `[Level 4] 本關得分 ${levelScore} 分（本題 +${earnedScore}），累計總分 ${newTotal} 分`,
       );
 
       setTimeout(go_to_next_question, transition_delay);

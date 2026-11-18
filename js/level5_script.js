@@ -7,10 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (start_button) {
     start_button.addEventListener("click", (event) => {
       event.preventDefault();
-      localStorage.setItem("level1ScoreBase", "0");
-      localStorage.setItem("totalScore", "0");
+      localStorage.setItem("level5Score", "0");
       setTimeout(() => {
-        window.location.href = "0_6_1.html";
+        window.location.href = "./0_6_1.html";
       }, 200);
     });
   }
@@ -19,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     next_button.addEventListener("click", (event) => {
       event.preventDefault();
       setTimeout(() => {
-        window.location.href = "0_7.html";
+        window.location.href = "./0_7.html";
       }, 200);
     });
   }
@@ -80,7 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const saved_total = Number(localStorage.getItem("totalScore") ?? "0");
     const current_total = Number.isFinite(saved_total) ? saved_total : 0;
-    localStorage.setItem("totalScore", String(current_total + earned_score));
+    const new_total = current_total + earned_score;
+    const level_score = Number(localStorage.getItem("level5Score") ?? "0") + earned_score;
+    localStorage.setItem("level5Score", String(level_score));
+    localStorage.setItem("totalScore", String(new_total));
+    console.log(`[Level 5] 本關得分 ${level_score} 分（本次 +${earned_score}），累計總分 ${new_total} 分`);
 
     feedback_images_by_id.forEach((image) => {
       image?.classList.remove("is_active");
@@ -101,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       is_stopped = false;
     }, 2000);
     setTimeout(() => {
-      window.location.href = "0_6_2.html";
+      window.location.href = "./0_6_2.html";
     }, 2000);
   });
 });
