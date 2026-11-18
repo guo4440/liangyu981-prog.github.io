@@ -3,7 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const stage = document.querySelector(".game_stage");
   if (stage) {
     const resizeStage = () => {
-      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      const scale = Math.min(
+        window.innerWidth / 1920,
+        window.innerHeight / 1080,
+      );
       stage.style.setProperty("--stage-scale", String(scale));
     };
 
@@ -45,8 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       if (!hasMatchingElement) continue;
 
-      for (const match of backgroundImage.matchAll(/url\(["']?([^"')]+)["']?\)/g)) {
-        const imageUrl = new URL(match[1], stylesheetUrl || document.baseURI).href;
+      for (const match of backgroundImage.matchAll(
+        /url\(["']?([^"')]+)["']?\)/g,
+      )) {
+        const imageUrl = new URL(match[1], stylesheetUrl || document.baseURI)
+          .href;
         if (preloadedImages.has(imageUrl)) continue;
         const image = new Image();
         image.decoding = "async";

@@ -24,24 +24,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const stage = document.querySelector(".game_stage");
   if (stage?.classList.contains("level6_transition")) {
     const getDurationMs = (property) => {
-      const value = window.getComputedStyle(stage).getPropertyValue(property).trim();
+      const value = window
+        .getComputedStyle(stage)
+        .getPropertyValue(property)
+        .trim();
       const duration = Number.parseFloat(value) || 0;
       return value.endsWith("ms") ? duration : duration * 1000;
     };
     const flash = stage.querySelector(".transition_flash");
-    window.setTimeout(() => {
-      stage.querySelector(".transition_fini").classList.add("is_visible");
-    }, getDurationMs("--level6-end-hold") + getDurationMs("--level6-flash-duration") / 2);
-    flash.addEventListener("animationend", (event) => {
-      if (event.animationName !== "transitionWhiteFlash") return;
-      flash.hidden = true;
-      window.setTimeout(() => {
-        stage.querySelector(".transition_decorations").classList.add("is_visible");
-      }, getDurationMs("--level6-decorations-delay"));
-      window.setTimeout(() => {
-        window.location.href = "./0_7_3.html";
-      }, getDurationMs("--level6-fini-hold"));
-    }, { once: true });
+    window.setTimeout(
+      () => {
+        stage.querySelector(".transition_fini").classList.add("is_visible");
+      },
+      getDurationMs("--level6-end-hold") +
+        getDurationMs("--level6-flash-duration") / 2,
+    );
+    flash.addEventListener(
+      "animationend",
+      (event) => {
+        if (event.animationName !== "transitionWhiteFlash") return;
+        flash.hidden = true;
+        window.setTimeout(() => {
+          stage
+            .querySelector(".transition_decorations")
+            .classList.add("is_visible");
+        }, getDurationMs("--level6-decorations-delay"));
+        window.setTimeout(() => {
+          window.location.href = "./0_7_3.html";
+        }, getDurationMs("--level6-fini-hold"));
+      },
+      { once: true },
+    );
     return;
   }
   if (!stage?.querySelector(".item_selector")) return;
@@ -71,7 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return {
       x: Number.parseFloat(styles.getPropertyValue("--assembly-x")) || 0,
       y: Number.parseFloat(styles.getPropertyValue("--assembly-y")) || 0,
-      scale: Number.parseFloat(styles.getPropertyValue("--assembly-scale")) || 1,
+      scale:
+        Number.parseFloat(styles.getPropertyValue("--assembly-scale")) || 1,
     };
   };
 
@@ -150,13 +164,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const drag = activeDrag;
     activeDrag = null;
     const point = getStagePoint(event);
-    const centerX = point.x - drag.grabX + (drag.artwork.width * drag.assembly.scale) / 2;
-    const centerY = point.y - drag.grabY + (drag.artwork.height * drag.assembly.scale) / 2;
-    const targetCenterX = (drag.artwork.left + drag.artwork.width / 2) * drag.assembly.scale + drag.assembly.x;
-    const targetCenterY = (drag.artwork.top + drag.artwork.height / 2) * drag.assembly.scale + drag.assembly.y;
+    const centerX =
+      point.x - drag.grabX + (drag.artwork.width * drag.assembly.scale) / 2;
+    const centerY =
+      point.y - drag.grabY + (drag.artwork.height * drag.assembly.scale) / 2;
+    const targetCenterX =
+      (drag.artwork.left + drag.artwork.width / 2) * drag.assembly.scale +
+      drag.assembly.x;
+    const targetCenterY =
+      (drag.artwork.top + drag.artwork.height / 2) * drag.assembly.scale +
+      drag.assembly.y;
     const isCorrectPosition =
-      Math.abs(centerX - targetCenterX) <= drag.artwork.width * drag.assembly.scale * 0.12 &&
-      Math.abs(centerY - targetCenterY) <= drag.artwork.height * drag.assembly.scale * 0.12;
+      Math.abs(centerX - targetCenterX) <=
+        drag.artwork.width * drag.assembly.scale * 0.12 &&
+      Math.abs(centerY - targetCenterY) <=
+        drag.artwork.height * drag.assembly.scale * 0.12;
 
     drag.preview.remove();
 
@@ -193,7 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const newTotal = currentTotal + earnedScore;
       localStorage.setItem("level6Score", String(earnedScore));
       localStorage.setItem("totalScore", String(newTotal));
-      console.log(`[Level 6] 本關得分 ${earnedScore} 分（組裝耗時 ${elapsedSeconds.toFixed(2)} 秒），累計總分 ${newTotal} 分`);
+      console.log(
+        `[Level 6] 本關得分 ${earnedScore} 分（組裝耗時 ${elapsedSeconds.toFixed(2)} 秒），累計總分 ${newTotal} 分`,
+      );
       window.setTimeout(() => {
         window.location.href = "./0_7_2.html";
       }, 1000);
